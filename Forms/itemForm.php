@@ -1,12 +1,11 @@
 <?php
 
-include 'includeBootst.php';
 echo '
 <head>
     <title>Новий товар</title>
 </head>
 <div class="container">
-    <form action="itemInsert.php" method="POST" name="form" class="form-horizontal">
+    <form action="../Actions/itemInsert.php" method="POST" name="form" class="form-horizontal">
     <legend>НОВИЙ ТОВАР</legend>
         <input name="id_category" type="text" class="form-control" placeholder="Категорія товару" maxlength="20"><br>
         <input name="nameitem" type="text" class="form-control" placeholder="Найменування нового товару" maxlength="20"><br>

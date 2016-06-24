@@ -1,6 +1,5 @@
 <?php
 
-include 'includeBootst.php';
 
 if (!isset($_POST['id_category'])) {
     echo "Введіть найменування категорії товару";

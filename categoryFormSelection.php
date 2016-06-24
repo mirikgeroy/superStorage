@@ -1,6 +1,6 @@
 <?php
 
-include 'includeBootst.php';
+include 'head.php';
 echo ' 
 
 <div class="container">

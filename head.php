@@ -32,8 +32,8 @@
 <ul>
     <li><a class="active" href="categoryPage.php">Категорії троварів</a></li>
     <li><a href="itemsPage.php">Товари</a></li>
+    <li><a href="inventoryPage.php">Інвертаризація</a></li>
     <li><a href="#about">Ціни</a></li>
-    <li><a href="#contact">Інвертаризація</a></li>
-    <li><a href="#about">Про розробника</a></li>
     <li><a href="#about">Вартість всіх матеріалів</a></li>
+        <li><a href="aboutMe.php">Про розробника</a></li>
 </ul>

@@ -7,7 +7,7 @@
 </script>
 <?php
 
-echo '<div class="col-lg-6 col-lg-offset-1">';
+echo '<div class="col-lg-10 col-lg-offset-1">';
 echo '<table class="table table-striped"><tr><th>#</th><th>НАЗВА КАТЕГОРІЇ</th><th>НАЗВА ТОВАРУ</th>
 <th>ЗАКУПІВЕЛЬНА ЦІНА</th><th>видалення товару</th></tr>';
 $i = 1;

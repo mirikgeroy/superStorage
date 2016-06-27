@@ -14,7 +14,7 @@ $i = 1;
 foreach ($categories as $category) {
     echo '<tr>
                 <td>' . $i . '</td>
-                <td>' . $category['name'] . '</td>
+                <td><a href="items.php">' . $category['name'] . '</a></td>
                 <td><a href="javascript: deleteMessage(' . $category['id'] . ')">Видалити</a></td>
             </tr>';
     $i++;

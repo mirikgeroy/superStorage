@@ -5,7 +5,7 @@
  * @param float $cost
  * @return bool|mysqli_result
  */
-function insertItem($itemName, $categoryId, $cost)
+function insertInventory($itemId, $number, $unit)
 {
     $db = mysqli_connect("localhost", "root", "");
     mysqli_set_charset($db, 'utf8');
@@ -13,7 +13,7 @@ function insertItem($itemName, $categoryId, $cost)
 
     $result = mysqli_query(
         $db,
-        "INSERT INTO `items` (`name`,`category_id`,`cost`) VALUE ('$itemName','$categoryId','$cost')"
+        "INSERT INTO `inventory` (`item_id`,`number`,`unit`) VALUE ('$itemId','$number','$unit')"
     );
 
     return $result;
@@ -22,12 +22,12 @@ function insertItem($itemName, $categoryId, $cost)
 /**
  * @return array
  */
-function getItems(/**categoryId = null*/)
+function getInventory(/**categoryId = null*/)
 {
     $pdo = new PDO("mysql:host=localhost; dbname=storage", 'root', '');
-    $sql = 'SELECT i.id as id, i.name as `name`, c.name as category_name, i.cost as cost ,c.id as category_id
-          FROM items i 
-          INNER JOIN category c ON c.id=i.category_id';
+    $sql = 'SELECT i.id as id, i.number as `number`, i.unit as unit, it.name as item_name
+          FROM inventory i 
+          INNER JOIN items it ON it.id=i.item_id';
 //    if (categoryId){
 //        $stmt = $pdo->query($sql);
 //        $res = [];
@@ -44,9 +44,9 @@ function getItems(/**categoryId = null*/)
     while ($row = $stmt->fetch()) {
         $res[] = [
             'id' => $row["id"],
-            'name' => $row["name"],
-            'category_name' => $row["category_name"],
-            'cost' => $row["cost"],
+            'item_name' => $row["item_name"],
+            'unit' => $row["unit"],
+            'number' => $row["number"],
         ];
     }
 
@@ -57,10 +57,10 @@ function getItems(/**categoryId = null*/)
  * @param string $itemName
  * @return bool
  */
-function itemExist($itemName, $categoryId)
+function inventoryExist($itemId)
 {
     include 'connectDb.php';
-    $sql = sprintf('SELECT * FROM items WHERE name = "%s" AND category_id="%s"', $itemName, $categoryId);
+    $sql = sprintf('SELECT * FROM items WHERE id = "%s"', $itemId);
     $stmt = $pdo->query($sql);
     if ($stmt->fetch()) {
         return true;
@@ -68,15 +68,14 @@ function itemExist($itemName, $categoryId)
         return false;
     }
 }
-
 /**
  * @param integer $itemId
  * @return mixed
  */
-function deleteItem($itemId)
+function deleteInvent($id)
 {
     include 'connectDb.php';
-    $sql = 'DELETE FROM items WHERE id ='.$itemId;
+    $sql = 'DELETE FROM inventory WHERE id ='.$id;
     $stmt = $pdo->query($sql);
 
     return $stmt;

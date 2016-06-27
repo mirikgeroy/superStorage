@@ -31,7 +31,7 @@
 </head>
 <ul>
     <li><a class="active" href="categoryPage.php">Категорії троварів</a></li>
-    <li><a href="#news">Товари</a></li>
+    <li><a href="itemsPage.php">Товари</a></li>
     <li><a href="#about">Ціни</a></li>
     <li><a href="#contact">Інвертаризація</a></li>
     <li><a href="#about">Про розробника</a></li>

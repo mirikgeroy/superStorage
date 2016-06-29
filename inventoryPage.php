@@ -6,8 +6,9 @@ if (isset($_POST['number'])) {
     if ($_POST['number'] == '' ){
         $validationError = "Введіть кількість товару";
     }
-    elseif (inventoryExist($_POST['item_id'])) {
-            echo "Введений товар вже існує! ДОДАТИ КІЛЬКІСТЬ?";
+    elseif (inventoryExist($_POST['item_id'], $_POST['number'],$_POST['unit'])) {
+            echo "Введений товар вже існує!Введену КІЛЬКІСТЬ ДОДАНО";
+        
     }
     else {
     insertInventory($_POST['item_id'], $_POST['number'],$_POST['unit']);

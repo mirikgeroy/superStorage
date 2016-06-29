@@ -54,20 +54,30 @@ function getInventory(/**categoryId = null*/)
 }
 
 /**
- * @param string $itemName
+ * @param string $itemId
  * @return bool
  */
-function inventoryExist($itemId)
+function inventoryExist($itemId, $number,$unit)
 {
     include 'connectDb.php';
-    $sql = sprintf('SELECT * FROM items WHERE id = "%s"', $itemId);
+    $sql = sprintf('SELECT * FROM inventory WHERE item_id = "%s"', $itemId);
     $stmt = $pdo->query($sql);
     if ($stmt->fetch()) {
+        $sql = sprintf(
+            'UPDATE inventory 
+             SET number = number+"%s"
+             WHERE item_id="%s" AND unit="%s"',
+            $number,
+            $itemId,
+            $unit
+        );
+        $stmt = $pdo->query($sql);
         return true;
     } else {
         return false;
     }
 }
+
 /**
  * @param integer $itemId
  * @return mixed

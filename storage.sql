@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Час створення: Чрв 24 2016 р., 17:29
--- Версія сервера: 5.5.48
--- Версія PHP: 5.5.33
+-- Время создания: Июн 29 2016 г., 22:32
+-- Версия сервера: 5.5.48
+-- Версия PHP: 5.5.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,83 +17,132 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База даних: `storage`
+-- База данных: `storage`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `category`
+-- Структура таблицы `category`
 --
 
 CREATE TABLE IF NOT EXISTS `category` (
-  `id` int(10) NOT NULL,
-  `category` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL,
+  `name` varchar(40) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 --
--- Дамп даних таблиці `category`
+-- Дамп данных таблицы `category`
 --
 
-INSERT INTO `category` (`id`, `category`) VALUES
-(1, 'труби'),
-(2, 'Фітінги ПЕ'),
-(3, 'Фітінги ППР'),
-(4, 'Труби ППР'),
-(5, 'Труби ППР'),
-(6, 'Труби ППР'),
-(7, 'Труби ППР'),
-(8, 'Труби ППР'),
-(9, 'Труби ППР'),
-(10, 'Труби ППР'),
-(11, 'Труби ППР'),
-(12, 'Труби ППР'),
-(13, 'Труби ППР');
+INSERT INTO `category` (`id`, `name`) VALUES
+(12, 'труби стальні'),
+(15, 'труби металопластикові'),
+(16, 'труби поліетиленові водяні'),
+(17, 'труби поліетиленові газові'),
+(19, 'фітінги поліпропіленові'),
+(20, 'фітінги стальні'),
+(22, 'фітінги металопластикові'),
+(24, 'крани кульові водяні'),
+(25, 'крани кульові газові'),
+(26, 'труби');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблиці `item`
+-- Структура таблицы `inventory`
 --
 
-CREATE TABLE IF NOT EXISTS `item` (
+CREATE TABLE IF NOT EXISTS `inventory` (
   `id` int(11) NOT NULL,
-  `id_category` int(11) NOT NULL,
-  `item` varchar(20) NOT NULL,
+  `item_id` int(11) NOT NULL,
   `number` int(11) NOT NULL,
-  `cost` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `Unit` varchar(10) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 --
--- Індекси збережених таблиць
+-- Дамп данных таблицы `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `item_id`, `number`, `Unit`) VALUES
+(10, 23, 28, 'кілограм'),
+(16, 16, 1270505, 'штук'),
+(17, 19, 2, 'штук'),
+(18, 21, 789, 'штук');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `items`
+--
+
+CREATE TABLE IF NOT EXISTS `items` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `cost` float NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `items`
+--
+
+INSERT INTO `items` (`id`, `name`, `category_id`, `cost`) VALUES
+(9, '5', 5, 5),
+(11, '0', 5, 10),
+(14, 'пизда', 5, 122),
+(15, 'аіцваіва', 11, 22),
+(16, 'ГОСТ 10704 57х3', 12, 12),
+(17, 'ГОСТ 10704 76х3', 12, 1),
+(18, 'ГОСТ 10704 89х3', 12, 3),
+(19, '16х2', 15, 3),
+(21, '20х2', 16, 0),
+(22, '25х2', 16, 11),
+(23, '32х2', 16, 0),
+(30, '16х2', 12, 1),
+(31, 'dfvvfdsa', 12, 1);
+
+--
+-- Индексы сохранённых таблиц
 --
 
 --
--- Індекси таблиці `category`
+-- Индексы таблицы `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Індекси таблиці `item`
+-- Индексы таблицы `inventory`
 --
-ALTER TABLE `item`
+ALTER TABLE `inventory`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT для збережених таблиць
+-- Индексы таблицы `items`
+--
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT для сохранённых таблиц
 --
 
 --
--- AUTO_INCREMENT для таблиці `category`
+-- AUTO_INCREMENT для таблицы `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
 --
--- AUTO_INCREMENT для таблиці `item`
+-- AUTO_INCREMENT для таблицы `inventory`
 --
-ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `inventory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT для таблицы `items`
+--
+ALTER TABLE `items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

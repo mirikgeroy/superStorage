@@ -25,9 +25,10 @@ function insertInventory($itemId, $number, $unit)
 function getInventory(/**categoryId = null*/)
 {
     $pdo = new PDO("mysql:host=localhost; dbname=storage", 'root', '');
-    $sql = 'SELECT i.id as id, i.number as `number`, i.unit as unit, it.name as item_name
+    $sql = 'SELECT i.id as id, i.number as `number`, i.unit as unit, it.name as item_name, c.name as category_name
           FROM inventory i 
-          INNER JOIN items it ON it.id=i.item_id';
+          INNER JOIN items it ON it.id=i.item_id
+          INNER JOIN category c ON c.id=it.category_id';
 //    if (categoryId){
 //        $stmt = $pdo->query($sql);
 //        $res = [];
@@ -47,6 +48,7 @@ function getInventory(/**categoryId = null*/)
             'item_name' => $row["item_name"],
             'unit' => $row["unit"],
             'number' => $row["number"],
+            'category_name'=>$row["category_name"]
         ];
     }
 
@@ -57,7 +59,7 @@ function getInventory(/**categoryId = null*/)
  * @param string $itemId
  * @return bool
  */
-function inventoryExist($itemId, $number,$unit)
+function inventoryExist($itemId, $number, $unit)
 {
     include 'connectDb.php';
     $sql = sprintf('SELECT * FROM inventory WHERE item_id = "%s"', $itemId);
@@ -78,6 +80,29 @@ function inventoryExist($itemId, $number,$unit)
     }
 }
 
+function removeInventory($itemId, $number, $unit)
+{
+    include 'connectDb.php';
+    $sql = sprintf('SELECT * FROM inventory WHERE item_id = "%s"', $itemId);
+    $stmt = $pdo->query($sql);
+    if ($stmt->fetch() and $number > 'inventory.number') {
+        $sql = sprintf(
+            'UPDATE inventory 
+             SET number = number-"%s"
+             WHERE item_id="%s" AND unit="%s"',
+            $number,
+            $itemId,
+            $unit
+        );
+        $stmt = $pdo->query($sql);
+        return true;
+    } else {
+        echo 'НЕДОСТАТНЬО ТОВАРУ НА СКЛАДІ';
+        return false;
+    }
+
+}
+
 /**
  * @param integer $itemId
  * @return mixed
@@ -85,7 +110,7 @@ function inventoryExist($itemId, $number,$unit)
 function deleteInvent($id)
 {
     include 'connectDb.php';
-    $sql = 'DELETE FROM inventory WHERE id ='.$id;
+    $sql = 'DELETE FROM inventory WHERE id =' . $id;
     $stmt = $pdo->query($sql);
 
     return $stmt;

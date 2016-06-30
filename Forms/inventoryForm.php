@@ -3,9 +3,6 @@ function renderInvenroryForm($action)
 {
 $items = getItems();
     echo '
-<head>
-    <title>Рух товару</title>
-</head>
 <div class="container">
     <form action="../inventoryPage.php" method="POST" name="form" class="form-horizontal">
         <legend>РУХ ТОВАРУ ПО СКЛАД</legend>
@@ -33,9 +30,9 @@ $items = getItems();
             </div>
             <div class="form-group">
             <div class="col-lg-4 control-label" >
-            <input name="number" type="text" class="form-control" placeholder="Кількість товару" maxlength="20"><br>';
-    sprintf('<input type=«hidden» name="operation" value=«%s»>', $action);
-        echo '<input name="submit" type="submit" class="btn btn-success" value="Виконати рух товару"><br>
+            <input name="number" type="text" class="form-control" placeholder="Кількість товару" maxlength="20"><br>
+    <input type="hidden" name="operation" value="'.$action.'">
+        <input name="submit" type="submit" class="btn btn-success" value="Виконати рух товару"><br>
             </div>
         </div>';
     if (isset($validationError)) {

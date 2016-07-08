@@ -29,17 +29,6 @@ function getInventory(/**categoryId = null*/)
           FROM inventory i 
           INNER JOIN items it ON it.id=i.item_id
           INNER JOIN category c ON c.id=it.category_id';
-//    if (categoryId){
-//        $stmt = $pdo->query($sql);
-//        $res = [];
-//        while ($row = $stmt->fetch()) {
-//            $res[] = [
-//                'id' => $row["id"],
-//                'name' => $row["name"],
-//                'category_name' => $row["category_name"],
-//                'cost' => $row["cost"],
-//            ];
-//    }
     $stmt = $pdo->query($sql);
     $res = [];
     while ($row = $stmt->fetch()) {
@@ -48,7 +37,7 @@ function getInventory(/**categoryId = null*/)
             'item_name' => $row["item_name"],
             'unit' => $row["unit"],
             'number' => $row["number"],
-            'category_name'=>$row["category_name"]
+            'category_name' => $row["category_name"]
         ];
     }
 
@@ -85,20 +74,24 @@ function removeInventory($itemId, $number, $unit)
     include 'connectDb.php';
     $sql = sprintf('SELECT * FROM inventory WHERE item_id = "%s"', $itemId);
     $stmt = $pdo->query($sql);
-    if ($stmt->fetch() and $number > 'inventory.number') {
-        $sql = sprintf(
-            'UPDATE inventory 
+    if ($row = $stmt->fetch()) {
+        if ($row['number'] >= $number) {
+            $sql = sprintf(
+                'UPDATE inventory 
              SET number = number-"%s"
              WHERE item_id="%s" AND unit="%s"',
-            $number,
-            $itemId,
-            $unit
-        );
-        $stmt = $pdo->query($sql);
-        return true;
-    } else {
-        echo 'НЕДОСТАТНЬО ТОВАРУ НА СКЛАДІ';
-        return false;
+                $number,
+                $itemId,
+                $unit
+            );
+            if ($pdo->query($sql)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
 }

@@ -14,7 +14,9 @@ echo '
                    
                     <select name="category_id" class="form-control">';
 foreach ($categories as $category) {
-    echo '<option value = ' . $category['id'] . ' >' . $category['name'] . '</option >';
+    $categoryExist = isset($_GET['selected_cat']) && $_GET['selected_cat'] == $category['id'];
+    $selected = $categoryExist ? 'selected' : '';
+    echo '<option value = '.$category['id'].' '.$selected.'>'.$category['name'].'</option >';
 }
 echo '
                     </select><br>

@@ -1,4 +1,6 @@
 <?php
+$time= time();
+echo  gmdate("Y-m-d **** H:i:s", $time);
 include 'head.php';
 include 'Queries/categoryQueries.php';
 if (isset($_POST['category'])) {
@@ -15,7 +17,6 @@ if (isset($_POST['category'])) {
 }
 if (isset($_GET['removed_category_id'])){
     deleteCategory($_GET['removed_category_id']);
-    
 }
 include 'Forms/categoryForm.php';
 $categories = getCategories();

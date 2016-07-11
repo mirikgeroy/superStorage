@@ -1,29 +1,25 @@
 <?php
 include 'head.php';
 include 'Queries/itemQueries.php';
-include  'Queries/categoryQueries.php';
+include 'Queries/categoryQueries.php';
 if (isset($_POST['name_item'])) {
-    if (itemExist($_POST['name_item'],$_POST['category_id'])) {
+    if (itemExist($_POST['name_item'], $_POST['category_id'])) {
         $validationError = "Введений товар вже існує";
-    }
-    elseif ($_POST['name_item'] == '' ){
+    } elseif ($_POST['name_item'] == '') {
         $validationError = "Введіть найменування товару";
-    }
-    elseif ($_POST['cost'] == ''){
+    } elseif ($_POST['cost'] == '') {
         $validationError = "Введіть ціну закупки товару";
-    }
-
-    else {
-        insertItem($_POST['name_item'], $_POST['category_id'],$_POST['cost']);
+    } else {
+        insertItem($_POST['name_item'], $_POST['category_id'], $_POST['cost']);
         echo 'НОВИЙ ТОВАР ДОДАНО В БАЗУ';
     }
 }
-if (isset($_GET['removed_item_id'])){
+if (isset($_GET['removed_item_id'])) {
     deleteItem($_GET['removed_item_id']);
 }
-$categories=getCategories();
-
-include 'Forms/itemForm.php';
-$items = getItems();
+$categories = getCategories();
+    include 'Forms/itemForm.php';
+$categoryId = (isset($_GET['selected_cat'])) ? $_GET['selected_cat'] : null;
+$items = getItems($categoryId);
 include 'Tables/items.php';
 ?>

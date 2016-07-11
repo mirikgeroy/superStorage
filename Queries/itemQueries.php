@@ -20,14 +20,40 @@ function insertItem($itemName, $categoryId, $cost)
 }
 
 /**
+ * @param null|int $categoryId
  * @return array
  */
-function getItems(/**categoryId = null*/)
+function getItems($categoryId = null)
 {
     $pdo = new PDO("mysql:host=localhost; dbname=storage", 'root', '');
     $sql = 'SELECT i.id as id, i.name as `name`, c.name as category_name, i.cost as cost ,c.id as category_id
           FROM items i 
           INNER JOIN category c ON c.id=i.category_id';
+    if ($categoryId){
+        $sql.=' WHERE c.id='.$categoryId;
+    }
+    $stmt = $pdo->query($sql);
+    $res = [];
+    while ($row = $stmt->fetch()) {
+        $res[] = [
+            'id' => $row["id"],
+            'name' => $row["name"],
+            'category_name' => $row["category_name"],
+            'cost' => $row["cost"],
+        ];
+    }
+    return $res;
+}
+
+/**
+ * @return array
+ */
+function getItems1Cat($categoryId)
+{
+    $pdo = new PDO("mysql:host=localhost; dbname=storage", 'root', '');
+    $sql = 'SELECT i.id as id, i.name as `name`, c.name as category_name, i.cost as cost 
+        FROM items i WHERE i.category_id='.$categoryId.'
+        INNER JOIN category c ON c.id=i.category_id';
     $stmt = $pdo->query($sql);
     $res = [];
     while ($row = $stmt->fetch()) {
